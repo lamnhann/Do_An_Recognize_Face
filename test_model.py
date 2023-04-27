@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 import mysql.connector
-#from sklearn.externals import joblib
 import joblib
 from skimage.feature import hog
+import datetime
 
 # Kết nối tới cơ sở dữ liệu MySQL
 mydb = mysql.connector.connect(
@@ -35,8 +35,6 @@ while(True):
     for (x,y,w,h) in faces:
         roi_gray = gray[y:y+h, x:x+w]
         roi_gray = cv2.resize(roi_gray, (100, 100), interpolation = cv2.INTER_AREA)
-        # roi = roi_gray.reshape(1, -1)
-
         def extract_hog_features(X):
             hog_features = []
             for img in X:
@@ -66,11 +64,8 @@ while(True):
         mycursor.execute(sql, val)
         myresult = mycursor.fetchone()
         cv2.putText(frame, myresult[1], (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-        # cv2.putText(frame, myresult[2], (x, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
         # Mở file text để ghi thông tin điểm danh
-        import datetime
-
         with open('diem_danh.txt', 'a') as f:
             # Lấy thời gian hiện tại
             now = datetime.datetime.now()

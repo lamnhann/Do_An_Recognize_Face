@@ -114,9 +114,11 @@ clf.fit(X_train_hog_reshape, y_train)
 # # Lưu mô hình vào file svm_model.pkl
 joblib.dump(clf, 'svm_model.pkl')
 
-# # Đọc mô hình từ file svm_model.pkl
-clf = joblib.load('svm_model.pkl')
+
 # Đánh giá mô hình trên dữ liệu test
 accuracy = clf.score(X_test_hog_reshape, y_test)
-print("Accuracy: ", accuracy)
+print("Accuracy: ", accuracy*100)
+
+
+
 
